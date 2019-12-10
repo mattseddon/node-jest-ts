@@ -1,8 +1,8 @@
 import Resource from '../../typings/Resource';
-import MoviesApi from '../../api/MoviesApi';
+import Movies from '../../api/Movies';
 
 describe('GIVEN the Movies API and two movies', () => {
-  const moviesApi: Resource = new MoviesApi();
+  const movies: Resource = new Movies();
 
   const originalMovie: object = {
     name: 'Jaws',
@@ -15,23 +15,23 @@ describe('GIVEN the Movies API and two movies', () => {
   };
 
   describe('WHEN we create a classic original movie', () => {
-    const movie: object = moviesApi.create(originalMovie);
+    const movie: object = movies.create(originalMovie);
     it('THEN returns an object', () => {
       expect(movie).toEqual(originalMovie);
     });
   });
 
   describe('WHEN we create an awful sequel to cash in', () => {
-    const movie: object = moviesApi.create(sequelMovie);
+    const movie: object = movies.create(sequelMovie);
     it('THEN returns an object', () => {
       expect(movie).toEqual(sequelMovie);
     });
   });
 
   describe('WHEN we try to find all the movies', () => {
-    const movies: object = moviesApi.findMany();
+    const found: object = movies.findMany();
     it('THEN returns all of the objects in a list', () => {
-      expect(movies).toEqual([originalMovie, sequelMovie]);
+      expect(found).toEqual([originalMovie, sequelMovie]);
     });
   });
 });
