@@ -30,19 +30,17 @@ describe('GIVEN two movies and the movies GET and POST endpoints', () => {
 
   describe('WHEN we POST the movie data to the endpoint', () => {
     it('THEN accepts the data', async done => {
-      const originalMovieResponse = await request
+      await request
         .post(endpoint)
         .send(originalMovie)
-        .set('Accept', 'application/json');
+        .set('Accept', 'application/json')
+        .expect(200);
 
-      expect(originalMovieResponse.status).toBe(200);
-
-      const sequelMovieResponse = await request
+      await request
         .post(endpoint)
         .send(sequelMovie)
-        .set('Accept', 'application/json');
-
-      expect(sequelMovieResponse.status).toBe(200);
+        .set('Accept', 'application/json')
+        .expect(200);
 
       done();
     });
