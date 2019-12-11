@@ -1,14 +1,20 @@
 import Resource from '../typings/Resource';
 
-let movies = [];
-
 export default class Movies implements Resource {
+  constructor(public dataArray: object[] = []) {
+    this.dataArray = dataArray;
+  }
+
+  get(key: string) {
+    return this[key];
+  }
+
   create(data: object) {
-    movies.push(data);
+    this.dataArray.push(data);
     return data;
   }
 
   findMany() {
-    return movies;
+    return this.get('dataArray');
   }
 }
