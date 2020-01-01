@@ -1,25 +1,62 @@
-import axios from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
+import Response from './typings/Response';
 
 export default class Requests {
-  get = async (url: string) => {
-    return axios.get(url).then(
-      response => {
-        return response;
+  get = async (url: string): Promise<Response> => {
+    const promiseResponse = axios.get(url).then(
+      accept => {
+        return this.makeAcceptResponse(accept);
       },
-      error => {
-        console.log(error);
+      reject => {
+        return this.makeRejectResponse(reject);
       }
     );
+    return promiseResponse;
   };
 
-  post = async (url: string, data: object) => {
-    return axios.post(url, data).then(
-      response => {
-        return response;
+  post = async (url: string, data: object): Promise<Response> => {
+    const promiseResponse = axios.post(url, data).then(
+      accept => {
+        return this.makeAcceptResponse(accept);
       },
-      error => {
-        console.log(error);
+      reject => {
+        return this.makeRejectResponse(reject);
       }
     );
+    return promiseResponse;
+  };
+
+  all = async (promises: { [key: string]: Promise<Response> }) => {
+    const responses = axios
+      .all(Object.values(promises))
+      .then(
+        axios.spread((...args) => {
+          let responses = {} as any;
+          Object.keys(promises).forEach((element, idx) => {
+            responses[element] = args[idx];
+          });
+          return responses;
+        })
+      )
+      .catch(error => {
+        return error;
+      });
+    return responses;
+  };
+
+  private makeAcceptResponse = (response: AxiosResponse): Response => {
+    return {
+      data: response.data.json,
+      status: response.status,
+      statusText: response.statusText,
+    };
+  };
+
+  private makeRejectResponse = (error: AxiosError): Response => {
+    return {
+      data: error,
+      status: error.response.status,
+      statusText: error.response.statusText,
+    };
   };
 }
