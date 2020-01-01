@@ -31,7 +31,7 @@ export default class Requests {
       .all(Object.values(promises))
       .then(
         axios.spread((...args) => {
-          let responses = {} as { [key: string]: Response };
+          let responses: { [key: string]: Response } = {};
           Object.keys(promises).forEach((element, idx) => {
             responses[element] = args[idx];
           });
