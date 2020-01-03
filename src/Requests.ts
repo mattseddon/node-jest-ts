@@ -26,7 +26,9 @@ export default class Requests {
     return promiseResponse;
   };
 
-  all = async (promises: { [key: string]: Promise<Response> }) => {
+  all = async (promises: {
+    [key: string]: Promise<Response>;
+  }): Promise<{ [key: string]: Response }> => {
     const responses = axios
       .all(Object.values(promises))
       .then(
