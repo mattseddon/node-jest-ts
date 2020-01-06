@@ -41,7 +41,7 @@ export default class Requests {
         })
       )
       .catch(error => {
-        return error;
+        return { Error: this.makeRejectResponse(error) };
       });
     return responses;
   };

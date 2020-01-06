@@ -103,6 +103,12 @@ dist
 # TernJS port file
 .tern-port
 
+
+
 .localstack/
 .terraform/
 terraform.*
+
+lcov-report*
+clover.xml
+coverage-final.json
