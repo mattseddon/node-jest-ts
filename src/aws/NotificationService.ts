@@ -1,0 +1,23 @@
+import * as AWS from 'aws-sdk';
+import { promisify } from 'util';
+import { snsEndpoint, TopicArn } from './metadata';
+
+export default class NotificationService {
+  sns = new AWS.SNS({ endpoint: snsEndpoint, region: 'us-east-1' });
+
+  snsPublish = promisify(this.sns.publish).bind(this.sns);
+
+  publish = async (msg: string) => {
+    const publishParams: { TopicArn: string; Message: string } = {
+      TopicArn: TopicArn,
+      Message: msg,
+    };
+    let topicRes;
+    try {
+      topicRes = await this.snsPublish(publishParams);
+    } catch (e) {
+      topicRes = e;
+    }
+    console.log('TOPIC Response: ', topicRes);
+  };
+}

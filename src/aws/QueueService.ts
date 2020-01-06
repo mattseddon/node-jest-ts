@@ -3,7 +3,7 @@ import * as AWS from 'aws-sdk';
 import { promisify } from 'util';
 import { sqsEndpoint, sqsUrl } from './metadata';
 
-export default class SQS {
+export default class QueueService {
   sqs = new AWS.SQS({
     endpoint: sqsEndpoint,
     region: 'us-east-1',
@@ -18,7 +18,15 @@ export default class SQS {
     });
   };
 
-  receive = async () => {
+  receive = async (): Promise<
+    | {
+        MessageId?: string;
+        ReceiptHandle?: string;
+        MD5OfBody?: string;
+        Body?: string;
+      }
+    | { ERROR: string; Body?: string }
+  > => {
     try {
       const queueData: QueueData = await this.sqsReceiveMessage();
       if (this.queueHasMessages(queueData)) {
@@ -52,5 +60,3 @@ export default class SQS {
     };
   };
 }
-let sqs = new SQS();
-setInterval(sqs.receive, 500);
