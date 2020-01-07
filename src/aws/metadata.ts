@@ -1,14 +1,21 @@
 require('dotenv').config();
 
-const useLocal: boolean = process.env.NODE_ENV !== 'production';
+const useLocal = (): boolean => {
+  return process.env.NODE_ENV !== 'production' ? true : false;
+};
 
-export const snsEndpoint: string = useLocal ? 'http://localhost:4575' : '';
-export const TopicArn: string =
-  'arn:aws:sns:us-east-1:000000000000:local-topic';
+export const snsEndpoint = (): string => {
+  return useLocal() ? 'http://localhost:4575' : undefined;
+};
+export const TopicArn = (): string => {
+  return useLocal()
+    ? 'arn:aws:sns:us-east-1:000000000000:local-topic'
+    : undefined;
+};
 
-export const sqsEndpoint: string = useLocal
-  ? 'http://localhost:4576'
-  : undefined;
-export const sqsUrl: string = useLocal
-  ? sqsEndpoint + '/queue/local-queue'
-  : undefined;
+export const sqsEndpoint = (): string => {
+  return useLocal() ? 'http://localhost:4576' : undefined;
+};
+export const sqsUrl = (): string => {
+  return useLocal() ? sqsEndpoint() + '/queue/local-queue' : undefined;
+};

@@ -116,14 +116,14 @@ describe('GIVEN a queueService with the AWS SQS mocked', () => {
   });
 });
 
-describe('GIVEN the queueService and sns are setup and the sns is subscribed to the queueService', () => {
+describe('GIVEN the queueService and notificationService are setup and the notificationService is subscribed to the queueService', () => {
   const queueService = new QueueService();
-  const sns = new NotificationService();
+  const notificationService = new NotificationService();
   jest.resetModules();
   describe('WHEN we publish a message', () => {
     it('THEN picks up the message', async () => {
       const theMessage = 'wwwwweeeeeeeeeeeeeeeeeee, GF';
-      await sns.publish(theMessage);
+      await notificationService.publish(theMessage);
       const received = await queueService.receive();
       expect(JSON.parse(received.Body).Message).toBe(theMessage);
     });

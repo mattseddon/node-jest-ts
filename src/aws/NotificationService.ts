@@ -3,21 +3,27 @@ import { promisify } from 'util';
 import { snsEndpoint, TopicArn } from './metadata';
 
 export default class NotificationService {
-  sns = new AWS.SNS({ endpoint: snsEndpoint, region: 'us-east-1' });
+  private endpoint = snsEndpoint();
+  private sns = new AWS.SNS({ endpoint: this.endpoint, region: 'us-east-1' });
 
   snsPublish = promisify(this.sns.publish).bind(this.sns);
 
-  publish = async (msg: string) => {
+  publish = async (
+    msg: string
+  ): Promise<
+    | { ResponseMetadata: { RequestId: string }; MessageId: string }
+    | { ERROR: object }
+  > => {
     const publishParams: { TopicArn: string; Message: string } = {
-      TopicArn: TopicArn,
+      TopicArn: TopicArn(),
       Message: msg,
     };
     let topicRes;
     try {
       topicRes = await this.snsPublish(publishParams);
-    } catch (e) {
-      topicRes = e;
+    } catch (error) {
+      topicRes = { ERROR: error };
     }
-    console.log('TOPIC Response: ', topicRes);
+    return topicRes;
   };
 }

@@ -4,8 +4,9 @@ import { promisify } from 'util';
 import { sqsEndpoint, sqsUrl } from './metadata';
 
 export default class QueueService {
-  sqs = new AWS.SQS({
-    endpoint: sqsEndpoint,
+  private sqsUrl = sqsUrl();
+  private sqs = new AWS.SQS({
+    endpoint: sqsEndpoint(),
     region: 'us-east-1',
   });
 
@@ -13,7 +14,7 @@ export default class QueueService {
 
   sqsReceiveMessage = () => {
     return this.sqsReceivePromise({
-      QueueUrl: sqsUrl,
+      QueueUrl: this.sqsUrl,
       MaxNumberOfMessages: 1,
     });
   };
@@ -55,7 +56,7 @@ export default class QueueService {
 
   private makeDeleteParams = (ReceiptHandle: string) => {
     return {
-      QueueUrl: sqsUrl,
+      QueueUrl: this.sqsUrl,
       ReceiptHandle: ReceiptHandle,
     };
   };
