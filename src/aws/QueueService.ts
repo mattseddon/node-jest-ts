@@ -19,7 +19,7 @@ export default class QueueService {
     });
   };
 
-  receive = async (): Promise<
+  public receive = async (): Promise<
     | {
         MessageId?: string;
         ReceiptHandle?: string;

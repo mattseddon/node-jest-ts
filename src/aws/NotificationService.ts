@@ -3,12 +3,11 @@ import { promisify } from 'util';
 import { snsEndpoint, TopicArn } from './metadata';
 
 export default class NotificationService {
-  private endpoint = snsEndpoint();
-  private sns = new AWS.SNS({ endpoint: this.endpoint, region: 'us-east-1' });
+  private sns = new AWS.SNS({ endpoint: snsEndpoint(), region: 'us-east-1' });
 
   snsPublish = promisify(this.sns.publish).bind(this.sns);
 
-  publish = async (
+  public publish = async (
     msg: string
   ): Promise<
     | { ResponseMetadata: { RequestId: string }; MessageId: string }
