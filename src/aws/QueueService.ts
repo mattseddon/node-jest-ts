@@ -1,13 +1,13 @@
 import QueueData from '../typings/AWS';
 import * as AWS from 'aws-sdk';
 import { promisify } from 'util';
-import { sqsEndpoint, sqsUrl } from './metadata';
+import { sqsEndpoint, sqsUrl, region } from './metadata';
 
 export default class QueueService {
   private sqsUrl = sqsUrl();
   private sqs = new AWS.SQS({
     endpoint: sqsEndpoint(),
-    region: 'us-east-1',
+    region: region(),
   });
 
   sqsReceivePromise = promisify(this.sqs.receiveMessage).bind(this.sqs);

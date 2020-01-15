@@ -8,8 +8,8 @@
     "start": "node dist/index.js",
     "dev": "nodemon --exec ts-node src/index.ts --watch src",
     "test": "jest --watch",
-	"coverage": "jest --coverage",
-	"clearTestCache": "jest --clearCache"
+    "coverage": "jest --coverage",
+    "clearTestCache": "jest --clearCache"
   },
   "repository": {
     "type": "git",
@@ -38,16 +38,19 @@
     "nodemon": "^2.0.1",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
+    "serverless-localstack": "0.4.21",
+    "serverless-plugin-typescript": "1.1.7",
     "supertest": "^4.0.2",
     "ts-jest": "^24.2.0",
     "ts-node": "^8.5.4",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.4"
   },
   "dependencies": {
     "aws-sdk": "^2.596.0",
     "axios": "^0.19.0",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "only": "0.0.2"
   }
 }

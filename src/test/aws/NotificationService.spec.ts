@@ -25,7 +25,6 @@ describe('GIVEN a notificationService with the AWS SNS mocked', () => {
       const published = await notificationService.publish(
         'this is a message that will never be seen by anyone (single tear)'
       );
-
       expect(published).toEqual({ ERROR: rejectValue });
       expect(spyPromise).toBeCalledTimes(1);
 
