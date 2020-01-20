@@ -5,13 +5,11 @@ const request = supertest(app);
 describe('GIVEN the test endpoint', () => {
   const endpoint = '/test';
   describe('WHEN we call asynchronously', () => {
-    it('THEN returns the correct response', async done => {
+    it('THEN returns the correct response', async () => {
       const response = await request.get(endpoint);
 
       expect(response.status).toBe(200);
       expect(response.body.message).toBe('pass!');
-
-      done();
     });
   });
 });
@@ -29,7 +27,7 @@ describe('GIVEN two movies and the movies GET and POST endpoints', () => {
   };
 
   describe('WHEN we POST the movie data to the endpoint', () => {
-    it('THEN accepts the data', async done => {
+    it('THEN accepts the data', async () => {
       await request
         .post(endpoint)
         .send(originalMovie)
@@ -41,20 +39,16 @@ describe('GIVEN two movies and the movies GET and POST endpoints', () => {
         .send(sequelMovie)
         .set('Accept', 'application/json')
         .expect(200);
-
-      done();
     });
   });
 
   describe('WHEN we GET the data from the endpoint', () => {
-    it('THEN returns the data', async done => {
+    it('THEN returns the data', async () => {
       const response = await request.get(endpoint);
 
       expect(response.body.length).toBe(2);
       expect(response.body).toContainEqual(originalMovie);
       expect(response.body).toContainEqual(sequelMovie);
-
-      done();
     });
   });
 });
