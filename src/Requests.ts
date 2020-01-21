@@ -4,8 +4,8 @@ import Response from './typings/Response';
 export default class Requests {
   get = async (url: string): Promise<Response> => {
     const promiseResponse = axios.get(url).then(
-      accept => {
-        return this.makeAcceptResponse(accept);
+      resolve => {
+        return this.makeResolveResponse(resolve);
       },
       reject => {
         return this.makeRejectResponse(reject);
@@ -16,8 +16,8 @@ export default class Requests {
 
   post = async (url: string, data: object): Promise<Response> => {
     const promiseResponse = axios.post(url, data).then(
-      accept => {
-        return this.makeAcceptResponse(accept);
+      resolve => {
+        return this.makeResolveResponse(resolve);
       },
       reject => {
         return this.makeRejectResponse(reject);
@@ -46,7 +46,7 @@ export default class Requests {
     return responses;
   };
 
-  private makeAcceptResponse = (response: AxiosResponse): Response => {
+  private makeResolveResponse = (response: AxiosResponse): Response => {
     return {
       data: response.data.json,
       status: response.status,
