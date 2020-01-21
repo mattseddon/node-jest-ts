@@ -36,7 +36,7 @@ describe('GIVEN a queueService with the AWS SQS mocked and a set of messages', (
   describe('WHEN the queue receives the messages and the underlying promise is resolved', () => {
     const data: QueueData = { Messages: [firstMessage, secondMessage] };
 
-    it('THEN should return the first message', async () => {
+    it('THEN the first message is returned', async () => {
       const spyPromise = jest
         .spyOn(queueService, 'sqsReceivePromise')
         .mockResolvedValue(data);
@@ -63,7 +63,7 @@ describe('GIVEN a queueService with the AWS SQS mocked', () => {
   });
 
   describe('WHEN the queue receives no messages and the underlying promise is resolved', () => {
-    it('THEN should return an empty object', async () => {
+    it('THEN an empty object is return', async () => {
       const spyPromise = jest
         .spyOn(queueService, 'sqsReceivePromise')
         .mockResolvedValue({ Messages: [] });
@@ -77,7 +77,7 @@ describe('GIVEN a queueService with the AWS SQS mocked', () => {
   });
 
   describe('WHEN the queue receives no data and the underlying promise is resolved', () => {
-    it('THEN should return an empty object', async () => {
+    it('THEN an empty object is returned', async () => {
       const spyPromise = jest
         .spyOn(queueService, 'sqsReceivePromise')
         .mockResolvedValue({});
@@ -98,7 +98,7 @@ describe('GIVEN a queueService with the AWS SQS mocked', () => {
   describe('WHEN the underlying promise is rejected', () => {
     const rejectValue = 'go away & GF';
 
-    it('THEN should return an object containing an ERROR', async () => {
+    it('THEN an object containing an ERROR is returned', async () => {
       const spyPromise = jest
         .spyOn(queueService, 'sqsReceivePromise')
         .mockRejectedValue(rejectValue);
@@ -121,10 +121,11 @@ describe('GIVEN the queueService and notificationService are setup and the notif
   const notificationService = new NotificationService();
   jest.resetModules();
   describe('WHEN we publish a message', () => {
-    it('THEN picks up the message', async () => {
+    it('THEN the queue picks up the message', async () => {
       const theMessage = 'wwwwweeeeeeeeeeeeeeeeeee, GF';
-      await notificationService.publish(theMessage);
+      const published = await notificationService.publish(theMessage);
       const received = await queueService.receive();
+      expect(Object.keys(published)).toEqual(['ResponseMetadata', 'MessageId']);
       expect(JSON.parse(received.Body).Message).toBe(theMessage);
     });
   });

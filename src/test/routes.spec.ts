@@ -5,7 +5,7 @@ const request = supertest(app);
 describe('GIVEN the test endpoint', () => {
   const endpoint = '/test';
   describe('WHEN we call asynchronously', () => {
-    it('THEN returns the correct response', async () => {
+    it('THEN the correct response is returned', async () => {
       const response = await request.get(endpoint);
 
       expect(response.status).toBe(200);
@@ -17,17 +17,17 @@ describe('GIVEN the test endpoint', () => {
 describe('GIVEN two movies and the movies GET and POST endpoints', () => {
   const endpoint = '/movies';
   const originalMovie: object = {
-    name: 'Jaws',
-    rating: 9,
+    name: 'Speed',
+    rating: 7.6,
   };
 
   const sequelMovie: object = {
-    name: 'Jaws: The Revenge',
-    rating: 1.4,
+    name: 'Speed 2: Cruise Control',
+    rating: 1.6,
   };
 
   describe('WHEN we POST the movie data to the endpoint', () => {
-    it('THEN accepts the data', async () => {
+    it('THEN the data is accepted', async () => {
       await request
         .post(endpoint)
         .send(originalMovie)
@@ -43,7 +43,7 @@ describe('GIVEN two movies and the movies GET and POST endpoints', () => {
   });
 
   describe('WHEN we GET the data from the endpoint', () => {
-    it('THEN returns the data', async () => {
+    it('THEN the data is returned', async () => {
       const response = await request.get(endpoint);
 
       expect(response.body.length).toBe(2);

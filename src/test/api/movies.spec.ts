@@ -23,21 +23,21 @@ describe('GIVEN the Movies API and two movies', () => {
 
   describe('WHEN we create a classic original movie', () => {
     const movie: object = movies.create(originalMovie);
-    it('THEN returns an object', () => {
+    it('THEN an object is returned', () => {
       expect(movie).toEqual(originalMovie);
     });
   });
 
   describe('WHEN we create an awful sequel to cash in', () => {
     const movie: object = movies.create(sequelMovie);
-    it('THEN returns an object', () => {
+    it('THEN an object is returned', () => {
       expect(movie).toEqual(sequelMovie);
     });
   });
 
   describe('WHEN we try to find all the movies', () => {
     const found: object = movies.findMany();
-    it('THEN returns all of the objects in a list', () => {
+    it('THEN the expected objects are returned in an array', () => {
       expect(found).toEqual([originalMovie, sequelMovie]);
     });
   });
@@ -51,7 +51,7 @@ describe('GIVEN the Movies API instantiated with two movies', () => {
 
   describe('WHEN we try to find all the movies', () => {
     const found: object = movies.findMany();
-    it('THEN returns all of the objects in a list', () => {
+    it('THEN the expected objects are returned in an array', () => {
       expect(found).toEqual([originalMovie, sequelMovie]);
     });
   });

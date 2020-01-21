@@ -2,11 +2,11 @@ import axios from 'axios';
 import Requests from '../Requests';
 import Response from '../typings/Response';
 
-describe('GIVEN a url', () => {
+describe('GIVEN a url which returns a specific status', () => {
   const url: string = 'https://httpbin.org/status/200';
   const requests = new Requests();
   describe('WHEN we perform a get request', () => {
-    it('THEN returns a response with a 200 status', async () => {
+    it('THEN a response with a 200 status is returned', async () => {
       const response: Response = await requests.get(url);
       expect(response.status).toEqual(200);
       expect(response.statusText).toEqual('OK');
@@ -14,11 +14,11 @@ describe('GIVEN a url', () => {
   });
 });
 
-describe('GIVEN a url', () => {
+describe('GIVEN a url which returns a specific status', () => {
   const url: string = 'https://httpbin.org/status/500';
   const requests = new Requests();
   describe('WHEN we perform a get request', () => {
-    it('THEN returns a response with a 500 status', async () => {
+    it('THEN a response with a 500 status is returned', async () => {
       const response: Response = await requests.get(url);
       expect(response.status).toEqual(500);
       expect(response.statusText).toEqual('INTERNAL SERVER ERROR');
@@ -29,12 +29,12 @@ describe('GIVEN a url', () => {
   });
 });
 
-describe('GIVEN another url', () => {
+describe('GIVEN another httpbin url', () => {
   const url: string = 'https://httpbin.org/anything';
   const requests = new Requests();
   const data: object = { 'what I give': 'is', 'what I get': true };
   describe('WHEN we perform a post request', () => {
-    it('THEN returns a response with a 200 status and the object that was sent', async () => {
+    it('THEN a response with a 200 status and the object that was sent is returned', async () => {
       const response: Response = await requests.post(url, data);
       expect(response.status).toEqual(200);
       expect(response.data).toEqual(data);
@@ -55,7 +55,7 @@ describe('GIVEN a url and some data', () => {
       message: 'goodbyyyyyeeeee',
       response: { statusText: rejectText, status: rejectStatus },
     };
-    it('THEN should return a response containing the correct information', async () => {
+    it('THEN a response containing the correct information is returned', async () => {
       const spyPromise = jest
         .spyOn(axios, 'post')
         .mockRejectedValue(errorObject);
@@ -81,7 +81,7 @@ describe('GIVEN two urls and some data', () => {
     post: requests.post(postUrl, data),
   };
   describe('WHEN we perform all of the requests asynchronously', () => {
-    it('THEN returns an object of responses with the expected values', async () => {
+    it('THEN an object containing responses with the expected values is returned', async () => {
       const responses: { [key: string]: Response } = await requests.all(
         promises
       );
@@ -108,7 +108,7 @@ describe('GIVEN three urls and some data', () => {
     post: requests.post(postUrl, data),
   };
   describe('WHEN we perform all of the requests asynchronously', () => {
-    it('THEN returns an object of responses with the expected values', async () => {
+    it('THEN an object containing responses with the expected values is returned', async () => {
       const responses: { [key: string]: Response } = await requests.all(
         promises
       );
@@ -134,8 +134,9 @@ describe('GIVEN two urls and some data', () => {
   const postUrl: string = 'https://httpbin.org/anything';
   const requests = new Requests();
   const data: object = { 'what I give': 'is', 'what I get': true };
+
   describe('WHEN we try to perform all of the requests asynchronously but one promise is rejected', () => {
-    it('THEN returns an object of responses with the expected values', async () => {
+    it('THEN an object containing only the first ERROR is returned', async () => {
       const rejectText = 'DEAD';
       const rejectStatus = 799;
       const errorObject = {
