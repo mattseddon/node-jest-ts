@@ -1,3 +1,3 @@
 # node-jest-ts
 
-Typescript, Node.js and Jest playground with some Localstack, Terraform and Serverless thrown in for fun
+TypeScript, Node.js and Jest playground with some axios, LocalStack, Terraform and Serverless thrown in for fun
