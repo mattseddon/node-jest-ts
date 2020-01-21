@@ -144,14 +144,12 @@ describe('GIVEN two urls and some data', () => {
         .spyOn(requests, 'get')
         .mockRejectedValue(errorObject);
 
-      const promises = {
+      const promises: PromiseResponses = {
         get: requests.get(getUrl),
         post: requests.post(postUrl, data),
       };
 
-      const responses: { [key: string]: Response } = await requests.all(
-        promises
-      );
+      const responses: Responses = await requests.all(promises);
 
       expect(responses.Error.status).toEqual(799);
       expect(responses.Error.data).toEqual(errorObject);
