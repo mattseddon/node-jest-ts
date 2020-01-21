@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Requests from '../Requests';
-import Response from '../typings/Response';
+import { Response, Responses, PromiseResponses } from '../typings/Response';
 
 describe('GIVEN a url which returns a specific status', () => {
   const url: string = 'https://httpbin.org/status/200';
@@ -71,20 +71,18 @@ describe('GIVEN a url and some data', () => {
   });
 });
 
-describe('GIVEN two urls and some data', () => {
+describe('GIVEN two urls, some data and a promise responses object', () => {
   const getUrl: string = 'https://httpbin.org/status/200';
   const postUrl: string = 'https://httpbin.org/anything';
   const requests = new Requests();
   const data: object = { 'what I give': 'is', 'what I get': true };
-  const promises = {
+  const promises: PromiseResponses = {
     get: requests.get(getUrl),
     post: requests.post(postUrl, data),
   };
   describe('WHEN we perform all of the requests asynchronously', () => {
     it('THEN an object containing responses with the expected values is returned', async () => {
-      const responses: { [key: string]: Response } = await requests.all(
-        promises
-      );
+      const responses: Responses = await requests.all(promises);
 
       expect(responses.get.status).toEqual(200);
       expect(responses.get.statusText).toEqual('OK');
@@ -96,22 +94,20 @@ describe('GIVEN two urls and some data', () => {
   });
 });
 
-describe('GIVEN three urls and some data', () => {
+describe('GIVEN three urls, some data and a promise responses object', () => {
   const get500Url: string = 'https://httpbin.org/status/500';
   const get200Url: string = 'https://httpbin.org/status/200';
   const postUrl: string = 'https://httpbin.org/anything';
   const requests = new Requests();
   const data: object = { 'what I give': 'is', 'what I get': true };
-  const promises = {
+  const promises: PromiseResponses = {
     get500: requests.get(get500Url),
     get200: requests.get(get200Url),
     post: requests.post(postUrl, data),
   };
   describe('WHEN we perform all of the requests asynchronously', () => {
     it('THEN an object containing responses with the expected values is returned', async () => {
-      const responses: { [key: string]: Response } = await requests.all(
-        promises
-      );
+      const responses: Responses = await requests.all(promises);
 
       expect(responses.get500.status).toEqual(500);
       expect(responses.get500.statusText).toEqual('INTERNAL SERVER ERROR');

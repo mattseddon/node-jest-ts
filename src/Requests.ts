@@ -1,5 +1,5 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import Response from './typings/Response';
+import { Response, PromiseResponses, Responses } from './typings/Response';
 
 export default class Requests {
   get = async (url: string): Promise<Response> => {
@@ -26,14 +26,12 @@ export default class Requests {
     return promiseResponse;
   };
 
-  all = async (promises: {
-    [key: string]: Promise<Response>;
-  }): Promise<{ [key: string]: Response }> => {
+  all = async (promises: PromiseResponses): Promise<Responses> => {
     const responses = axios
       .all(Object.values(promises))
       .then(
         axios.spread((...args) => {
-          let responses: { [key: string]: Response } = {};
+          let responses: Responses = {};
           Object.keys(promises).forEach((element, idx) => {
             responses[element] = args[idx];
           });
