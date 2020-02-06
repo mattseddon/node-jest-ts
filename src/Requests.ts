@@ -32,8 +32,8 @@ export default class Requests {
       .then(
         axios.spread((...args) => {
           let responses: Responses = {};
-          Object.keys(promises).forEach((element, idx) => {
-            responses[element] = args[idx];
+          Object.keys(promises).forEach((key, idx) => {
+            responses[key] = args[idx];
           });
           return responses;
         })
