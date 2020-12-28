@@ -1,23 +1,23 @@
-require('dotenv').config();
+import "dotenv/config";
 
 const useLocal = (): boolean => {
-  return process.env.NODE_ENV !== 'production' ? true : false;
+    return process.env.NODE_ENV !== "production" ? true : false;
 };
 
 export const snsEndpoint = (): string => {
-  return useLocal() ? 'http://localhost:4575' : '';
+    return useLocal() ? "http://localhost:4566" : "";
 };
 export const TopicArn = (): string => {
-  return useLocal() ? 'arn:aws:sns:us-east-1:000000000000:local-topic' : '';
+    return useLocal() ? "arn:aws:sns:us-east-1:000000000000:local-topic" : "";
 };
 
 export const sqsEndpoint = (): string => {
-  return useLocal() ? 'http://localhost:4576' : '';
+    return useLocal() ? "http://localhost:4566" : "";
 };
 export const sqsUrl = (): string => {
-  return useLocal() ? sqsEndpoint() + '/queue/local-queue' : '';
+    return useLocal() ? sqsEndpoint() + "/queue/local-queue" : "";
 };
 
 export const region = (): string => {
-  return 'us-east-1';
+    return "us-east-1";
 };

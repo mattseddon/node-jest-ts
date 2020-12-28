@@ -1,15 +1,18 @@
 version: "3.2"
 services:
-  localstack:
-    image: localstack/localstack:latest
-    container_name: localstack
-    ports:
-      - "4563-4599:4563-4599"
-      - "8055:8080"
-    environment:
-      - SERVICES=s3,sns:4575,sqs:4576
-      - DEBUG=1
-      - DATA_DIR=/tmp/localstack/data
-    volumes:
-      - "./.localstack:/tmp/localstack"
-      - "/var/run/docker.sock:/var/run/docker.sock"
+    localstack:
+        container_name: localstack_main
+        image: localstack/localstack:latest
+        network_mode: bridge
+        ports:
+            - "4566:4566"
+            - "4571:4571"
+            - "8055:8080"
+        environment:
+            - SERVICES=s3,sns,sqs,sts,cloudformation,serverless
+            - DEBUG=1
+            - DOCKER_HOST=unix:///var/run/docker.sock
+            - DATA_DIR=/tmp/localstack/data
+        volumes:
+            - "./.localstack:/tmp/localstack"
+            - "/var/run/docker.sock:/var/run/docker.sock"
