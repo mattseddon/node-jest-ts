@@ -1,4 +1,9 @@
 {
-    "cSpell.words": ["httpbin", "localstack", "promisify"],
+    "cSpell.words": [
+		"httpbin",
+		"localstack",
+		"promisify",
+		"unmock"
+	],
     "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

@@ -13,6 +13,8 @@ const AWSMock = jest.mock("aws-sdk", () => {
     };
 });
 
+afterAll(() => AWSMock.unmock("aws-sdk"));
+
 describe("GIVEN a queueService with the AWS SQS mocked and a set of messages", () => {
     const queueService = new QueueService();
     const firstMessage = {

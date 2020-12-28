@@ -3,6 +3,15 @@ import * as AWS from "aws-sdk";
 import { promisify } from "util";
 import { sqsEndpoint, sqsUrl, region } from "./metadata";
 
+type DeleteParams = { QueueUrl: string; ReceiptHandle: string };
+
+type Message = {
+    MessageId: string;
+    ReceiptHandle: string;
+    MD5OfBody: string;
+    Body: string;
+};
+
 export default class QueueService {
     private sqsUrl = sqsUrl();
     private sqs = new AWS.SQS({
@@ -12,7 +21,7 @@ export default class QueueService {
 
     sqsReceivePromise = promisify(this.sqs.receiveMessage).bind(this.sqs);
 
-    sqsReceiveMessage = () => {
+    sqsReceiveMessage = (): Promise<QueueData> => {
         return this.sqsReceivePromise({
             QueueUrl: this.sqsUrl,
             MaxNumberOfMessages: 1
@@ -29,7 +38,7 @@ export default class QueueService {
         | { ERROR: string; Body?: string }
     > => {
         try {
-            const queueData: QueueData = await this.sqsReceiveMessage();
+            const queueData = await this.sqsReceiveMessage();
             if (this.queueHasMessages(queueData)) {
                 return this.processMessages(queueData);
             } else {
@@ -40,21 +49,22 @@ export default class QueueService {
         }
     };
 
-    private processMessages = (queueData: QueueData) => {
+    private processMessages = (queueData: QueueData): Message => {
         const [firstMessage] = queueData.Messages;
         this.sqsDeleteMessage(firstMessage.ReceiptHandle);
         return firstMessage;
     };
 
-    private queueHasMessages = (queueData: QueueData) => {
+    private queueHasMessages = (queueData: QueueData): boolean => {
         return queueData && queueData.Messages && queueData.Messages.length > 0;
     };
 
-    sqsDeleteMessage = (ReceiptHandle: string) => {
+    sqsDeleteMessage = (ReceiptHandle: string): undefined => {
         this.sqs.deleteMessage(this.makeDeleteParams(ReceiptHandle));
+        return;
     };
 
-    private makeDeleteParams = (ReceiptHandle: string) => {
+    private makeDeleteParams = (ReceiptHandle: string): DeleteParams => {
         return {
             QueueUrl: this.sqsUrl,
             ReceiptHandle: ReceiptHandle

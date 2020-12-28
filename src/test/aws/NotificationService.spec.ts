@@ -11,6 +11,8 @@ const AWSMock = jest.mock("aws-sdk", () => {
     };
 });
 
+afterAll(() => AWSMock.unmock("aws-sdk"));
+
 describe("GIVEN a notificationService with the AWS SNS mocked", () => {
     const notificationService = new NotificationService();
 

@@ -16,12 +16,12 @@ describe("GIVEN the test endpoint", () => {
 
 describe("GIVEN two movies and the movies GET and POST endpoints", () => {
     const endpoint = "/movies";
-    const originalMovie: object = {
+    const originalMovie = {
         name: "Speed",
         rating: 7.6
     };
 
-    const sequelMovie: object = {
+    const sequelMovie = {
         name: "Speed 2: Cruise Control",
         rating: 1.6
     };

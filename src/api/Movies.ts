@@ -5,16 +5,16 @@ export default class Movies implements Resource {
         this.dataArray = dataArray;
     }
 
-    get(key: string) {
+    get(key: string): object[] {
         return this[key];
     }
 
-    create(data: object) {
+    create(data: object): object {
         this.dataArray.push(data);
         return data;
     }
 
-    findMany() {
+    findMany(): object[] {
         return this.get("dataArray");
     }
 }
