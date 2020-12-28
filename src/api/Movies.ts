@@ -1,4 +1,4 @@
-import Resource from "../typings/Resource";
+import Resource from "../types/Resource";
 
 export default class Movies implements Resource {
     constructor(public dataArray: object[] = []) {

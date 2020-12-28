@@ -1,4 +1,4 @@
-import Resource from "../../typings/Resource";
+import Resource from "../../types/Resource";
 import Movies from "../../api/Movies";
 
 const _getOriginalMovie = () => {

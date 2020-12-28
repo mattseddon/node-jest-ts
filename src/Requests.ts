@@ -1,5 +1,5 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { Response, PromiseResponses, Responses } from "./typings/Response";
+import { Response, PromiseResponses, Responses } from "./types/Response";
 
 export default class Requests {
     get = async (url: string): Promise<Response> => {

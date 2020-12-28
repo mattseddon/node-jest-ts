@@ -1,6 +1,6 @@
 import QueueService from "../../aws/QueueService";
 import NotificationService from "../../aws/NotificationService";
-import QueueData from "../../typings/AWS";
+import QueueData from "../../types/AWS";
 
 const AWSMock = jest.mock("aws-sdk", () => {
     const SQSMocked = {

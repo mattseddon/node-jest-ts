@@ -1,4 +1,4 @@
-import QueueData from "../typings/AWS";
+import QueueData from "../types/AWS";
 import * as AWS from "aws-sdk";
 import { promisify } from "util";
 import { sqsEndpoint, sqsUrl, region } from "./metadata";

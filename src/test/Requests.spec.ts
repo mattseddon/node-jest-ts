@@ -1,6 +1,6 @@
 import axios from "axios";
 import Requests from "../Requests";
-import { Response, Responses, PromiseResponses } from "../typings/Response";
+import { Response, Responses, PromiseResponses } from "../types/Response";
 
 describe("GIVEN a url which returns a specific status", () => {
     const url = "https://httpbin.org/status/200";
